@@ -12,17 +12,17 @@ namespace RestWithAspNetCore
 {
     public class Startup
     {
+        public IConfiguration _configuration { get; }
+
         public Startup(IConfiguration configuration)
         {
-            Configuration = configuration;
-        }
-
-        public IConfiguration Configuration { get; }
+            _configuration = configuration;
+        }        
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            var connection = Configuration["MysqlConnection: MysqlConnectionString"];
+            var connection = _configuration["MysqlConnection:MysqlConnectionString"];
 
             services.AddDbContext<MysqlContext>(options => options.UseMySql(connection));
 
