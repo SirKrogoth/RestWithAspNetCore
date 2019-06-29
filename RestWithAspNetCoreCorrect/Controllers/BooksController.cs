@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using RestWithAspNetCoreCorrect.Business;
 using RestWithAspNetCoreCorrect.Model;
 using System;
 using System.Collections.Generic;
@@ -7,51 +8,54 @@ using System.Threading.Tasks;
 
 namespace RestWithAspNetCoreCorrect.Controllers
 {
-    [Route("api/[Controller]")]
+    [ApiVersion("1")]
+    [Route("api/[controller]/v{version:apiVersion}")]
     public class BooksController : Controller
     {
-        [HttpGet("v1")]
+        private IBookBusiness _bookBusiness;
+
+        public BooksController(IBookBusiness bookBusiness)
+        {
+            _bookBusiness = bookBusiness;
+        }
+
+        [HttpGet]
         public IActionResult Get()
         {
-            //return OK(_bookBusiness.FindAll());
-            return Ok();
+            return Ok(_bookBusiness.FindAll());            
         }
 
-        [HttpGet("v1")]
+        [HttpGet("{id}")]
         public IActionResult Get(long id)
         {
-            /*var book = _bookBusiness.FindById(id);
+            var book = _bookBusiness.FindById(id);
+
             if (book == null) return NotFound();
 
-            return Ok(book); */
-            return Ok();
+            return Ok(book);
         }
 
-        [HttpPost("v1")]
+        [HttpPost]
         public IActionResult Post([FromBody] Book book)
         {
-            /*if (book == null) return BadRequest();
-            return new ObjectResult(_bookBusiness.Create(book));*/
-            return Ok();
+            if (book == null) return BadRequest();
+            return new ObjectResult(_bookBusiness.Create(book));
         }
 
-        [HttpPut("v1")]
+        [HttpPut("{id}")]
         public IActionResult Put([FromBody] Book book)
         {
-            /*if (book == null) return BadRequest();
+            if (book == null) return BadRequest();
             var updateBook = _bookBusiness.Update(book);
             if (updateBook == null) return BadRequest();
-            return new ObjectResult(updateBook);*/
-
-            return Ok();
+            return new ObjectResult(updateBook);
         }
 
-        [HttpDelete("v1/{id}")]
+        [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            /*_bookBusiness.Delete(id);
-            return NoContent();*/
-            return Ok();
+            _bookBusiness.Delete(id);
+            return NoContent();
         }
     }
 }

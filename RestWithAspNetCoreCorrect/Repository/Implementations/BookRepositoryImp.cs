@@ -77,7 +77,7 @@ namespace RestWithAspNetCoreCorrect.Repository.Implementations
             return book;
         }
 
-        private bool Exist(string id)
+        private bool Exist(long id)
         {
             return _repository.Books.Any(p => p.id.Equals(id));
         }

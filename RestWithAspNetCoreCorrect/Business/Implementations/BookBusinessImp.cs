@@ -4,12 +4,19 @@ using System.Linq;
 using System.Threading.Tasks;
 using RestWithAspNetCoreCorrect.Model;
 using RestWithAspNetCoreCorrect.Repository;
+using RestWithAspNetCoreCorrect.Repository.Generic;
 
 namespace RestWithAspNetCoreCorrect.Business.Implementations
 {
     public class BookBusinessImp : IBookBusiness
     {
-        private IBookRepository _repository;
+        private IRepository<Book> _repository;
+
+        public BookBusinessImp(IRepository<Book> repository)
+        {
+            _repository = repository;
+        }
+
         public Book Create(Book book)
         {
             return _repository.Create(book);

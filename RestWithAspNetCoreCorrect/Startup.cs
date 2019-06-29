@@ -11,6 +11,9 @@ using RestWithAspNetCore.Repository.Implementations;
 using RestWithAspNetCore.Repository;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
+using RestWithAspNetCoreCorrect.Repository.Generic;
+using RestWithAspNetCoreCorrect.Business;
+using RestWithAspNetCoreCorrect.Business.Implementations;
 
 namespace RestWithAspNetCore
 {
@@ -64,6 +67,9 @@ namespace RestWithAspNetCore
             //Aqui estamos tratando a injeção de dependencias / Dependency Injection
             services.AddScoped<IPersonBusiness, PersonBusinessImp>();
             services.AddScoped<IPersonRepository, PersonRepositoryImp>();
+            services.AddScoped<IBookBusiness, BookBusinessImp>();
+            //Injeção de dependencia do nosso generics
+            services.AddScoped(typeof(IRepository<>), typeof(GenericRepository<>));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
