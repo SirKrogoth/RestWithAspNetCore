@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using RestWithAspNetCoreCorrect.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -50,7 +51,7 @@ namespace RestWithAspNetCoreCorrect.Controllers
         {
             /*_bookBusiness.Delete(id);
             return NoContent();*/
-            return OK();
+            return Ok();
         }
     }
 }
