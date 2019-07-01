@@ -5,14 +5,15 @@ using System.Threading;
 using RestWithAspNetCore.Model;
 using RestWithAspNetCore.Model.Context;
 using RestWithAspNetCore.Repository;
+using RestWithAspNetCoreCorrect.Repository.Generic;
 
 namespace RestWithAspNetCore.Business.Implementations
 {
     public class PersonBusinessImp : IPersonBusiness
     {
-        private IPersonRepository _repository;
+        private IRepository<Person> _repository;
 
-        public PersonBusinessImp(IPersonRepository repository)
+        public PersonBusinessImp(IRepository<Person> repository)
         {
             _repository = repository;
         }
