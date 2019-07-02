@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using RestWithAspNetCoreCorrect.Data.Converters;
+using RestWithAspNetCoreCorrect.Data.VO;
 using RestWithAspNetCoreCorrect.Model;
 using RestWithAspNetCoreCorrect.Repository;
 using RestWithAspNetCoreCorrect.Repository.Generic;
@@ -11,15 +13,20 @@ namespace RestWithAspNetCoreCorrect.Business.Implementations
     public class BookBusinessImp : IBookBusiness
     {
         private IRepository<Book> _repository;
+        private readonly BookConverter _converter;
 
         public BookBusinessImp(IRepository<Book> repository)
         {
             _repository = repository;
+            _converter = new BookConverter();
         }
 
-        public Book Create(Book book)
+        public BookVO Create(BookVO book)
         {
-            return _repository.Create(book);
+            var bookEntity = _converter.Parce(book);
+            bookEntity = _repository.Create(bookEntity);
+
+            return _converter.Parce(bookEntity);
         }
 
         public void Delete(long id)
@@ -27,19 +34,22 @@ namespace RestWithAspNetCoreCorrect.Business.Implementations
             _repository.Delete(id);
         }
 
-        public List<Book> FindAll()
+        public List<BookVO> FindAll()
         {
-            return _repository.FindAll();
+            return _converter.ParceList(_repository.FindAll());
         }
 
-        public Book FindById(long id)
+        public BookVO FindById(long id)
         {
-            return _repository.FindById(id);
+            return _converter.Parce(_repository.FindById(id));
         }
 
-        public Book Update(Book book)
+        public BookVO Update(BookVO book)
         {
-            return _repository.Update(book);
+            var bookEntity = _converter.Parce(book);
+            bookEntity = _repository.Update(bookEntity);
+
+            return _converter.Parce(bookEntity);
         }
     }
 }

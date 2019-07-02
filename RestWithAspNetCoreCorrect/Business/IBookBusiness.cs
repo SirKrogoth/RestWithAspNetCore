@@ -1,4 +1,5 @@
-﻿using RestWithAspNetCoreCorrect.Model;
+﻿using RestWithAspNetCoreCorrect.Data.VO;
+using RestWithAspNetCoreCorrect.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,10 +9,10 @@ namespace RestWithAspNetCoreCorrect.Business
 {
     public interface IBookBusiness
     {
-        Book Create(Book book);
-        Book FindById(long id);
-        List<Book> FindAll();
-        Book Update(Book book);
+        BookVO Create(BookVO book);
+        BookVO FindById(long id);
+        List<BookVO> FindAll();
+        BookVO Update(BookVO book);
         void Delete(long id);
     }
 }

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using RestWithAspNetCore.Model;
 using RestWithAspNetCore.Business;
+using RestWithAspNetCore.Data.VO;
 
 namespace RestWithAspNetCore.Controllers
 {
@@ -41,7 +42,7 @@ namespace RestWithAspNetCore.Controllers
 
         // POST api/values
         [HttpPost]
-        public IActionResult Post([FromBody] Person person)
+        public IActionResult Post([FromBody] PersonVO person)
         {
             if (person == null)
                 return BadRequest();
@@ -51,7 +52,7 @@ namespace RestWithAspNetCore.Controllers
 
         // PUT api/values/5
         [HttpPut("{id}")]
-        public IActionResult Put([FromBody] Person person)
+        public IActionResult Put([FromBody] PersonVO person)
         {
             if (person == null) return BadRequest();
 
