@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using RestWithAspNetCore.Model;
 using RestWithAspNetCore.Business;
 using RestWithAspNetCore.Data.VO;
+using Tapioca.HATEOAS;
 
 namespace RestWithAspNetCore.Controllers
 {
@@ -23,6 +24,7 @@ namespace RestWithAspNetCore.Controllers
 
         // GET api/values
         [HttpGet]
+        [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult Get()
         {
             return Ok(_personBusiness.FindAll());
@@ -30,6 +32,7 @@ namespace RestWithAspNetCore.Controllers
 
         // GET api/values/5
         [HttpGet("{id}")]
+        [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult Get(int id)
         {
             var person = _personBusiness.FindById(id);
@@ -42,6 +45,7 @@ namespace RestWithAspNetCore.Controllers
 
         // POST api/values
         [HttpPost]
+        [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult Post([FromBody] PersonVO person)
         {
             if (person == null)
@@ -52,6 +56,7 @@ namespace RestWithAspNetCore.Controllers
 
         // PUT api/values/5
         [HttpPut("{id}")]
+        [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult Put([FromBody] PersonVO person)
         {
             if (person == null) return BadRequest();
@@ -64,6 +69,7 @@ namespace RestWithAspNetCore.Controllers
 
         // DELETE api/values/5
         [HttpDelete("{id}")]
+        [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult Delete(int id)
         {
             _personBusiness.Delete(id);

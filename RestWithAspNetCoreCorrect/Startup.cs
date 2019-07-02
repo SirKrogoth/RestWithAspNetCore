@@ -14,6 +14,9 @@ using System.Collections.Generic;
 using RestWithAspNetCoreCorrect.Repository.Generic;
 using RestWithAspNetCoreCorrect.Business;
 using RestWithAspNetCoreCorrect.Business.Implementations;
+using Microsoft.Net.Http.Headers;
+using Tapioca.HATEOAS;
+using RestWithAspNetCoreCorrect.HyperMedia;
 
 namespace RestWithAspNetCore
 {
@@ -29,7 +32,7 @@ namespace RestWithAspNetCore
             _configuration = configuration;
             _environment = environment;
             _logger = logger;
-        }        
+        }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -38,14 +41,14 @@ namespace RestWithAspNetCore
 
             services.AddDbContext<MysqlContext>(options => options.UseMySql(connectionString));
 
-            if(_environment.IsDevelopment())
+            if (_environment.IsDevelopment())
             {
                 try
                 {
                     var evolveConnection = new MySql.Data.MySqlClient.MySqlConnection(connectionString);
 
                     var evolve = new Evolve.Evolve("evolve.json", evolveConnection, msg => _logger.LogInformation(msg))
-                    {                        
+                    {
                         Locations = new List<string> { "db/migrations" },
                         IsEraseDisabled = true,
                     };
@@ -57,9 +60,19 @@ namespace RestWithAspNetCore
                     _logger.LogCritical("Database Migrations failed. ", ex);
                     throw;
                 }
-            }            
+            }
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddMvc(options =>
+            {
+                options.RespectBrowserAcceptHeader = true;
+                options.FormatterMappings.SetMediaTypeMappingForFormat("xml", MediaTypeHeaderValue.Parse("text/xml"));
+                options.FormatterMappings.SetMediaTypeMappingForFormat("json", MediaTypeHeaderValue.Parse("json/xml"));
+            }).SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
+            .AddXmlSerializerFormatters();
+
+            var filterOptions = new HyperMediaFilterOptions();
+            filterOptions.ObjectContentResponseEnricherList.Add(new PersonEnricher());
+            services.AddSingleton(filterOptions);
 
             //Serviço de versionamento
             services.AddApiVersioning();
@@ -87,7 +100,12 @@ namespace RestWithAspNetCore
             }
 
             app.UseHttpsRedirection();
-            app.UseMvc();
+            app.UseMvc(routes =>
+            {
+                routes.MapRoute(
+                    name: "DefaultApi",
+                    template: "{controller=values}/{id?}");
+            });
         }
     }
 }
