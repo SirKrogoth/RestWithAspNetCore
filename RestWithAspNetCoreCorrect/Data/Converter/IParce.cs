@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace RestWithAspNetCoreCorrect.Data.Converter
 {
-    public interface IParcer<O, D>
+    public interface IParce<O, D>
     {
         D Parce(O origin);
         List<D> ParceList(List<O> origin);

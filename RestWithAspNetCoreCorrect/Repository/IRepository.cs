@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace RestWithAspNetCoreCorrect.Repository.Generic
+namespace RestWithAspNetCoreCorrect.Repository
 {
     public interface IRepository<T> where T : BaseEntity
     {

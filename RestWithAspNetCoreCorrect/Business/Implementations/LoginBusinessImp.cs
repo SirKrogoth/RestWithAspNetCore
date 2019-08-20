@@ -1,18 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
 using System.Security.Principal;
-using System.Threading;
-using RestWithAspNetCore.Data.VO;
-using RestWithAspNetCore.Model;
-using RestWithAspNetCore.Model.Context;
 using RestWithAspNetCoreCorrect.Business;
-using RestWithAspNetCoreCorrect.Data.Converters;
 using RestWithAspNetCoreCorrect.Model;
 using RestWithAspNetCoreCorrect.Repository;
-using RestWithAspNetCoreCorrect.Repository.Generic;
 using RestWithAspNetCoreCorrect.Security.Configuration;
 
 namespace RestWithAspNetCore.Business.Implementations
@@ -20,10 +12,12 @@ namespace RestWithAspNetCore.Business.Implementations
     public class LoginBusinessImp : ILoginBusiness
     {
         private IUserRepository _repository;
+
         private SigningConfiguration _signingConfiguration;
         private TokenConfiguration _tokenConfiguration;
 
-        public LoginBusinessImp(IUserRepository repository, SigningConfiguration signingConfiguration, TokenConfiguration tokenConfiguration)
+        public LoginBusinessImp(IUserRepository repository, SigningConfiguration signingConfiguration, 
+            TokenConfiguration tokenConfiguration)
         {
             _repository = repository;
             _signingConfiguration = signingConfiguration;

@@ -30,6 +30,7 @@ namespace RestWithAspNetCore
     public class Startup
     {
         private readonly ILogger _logger;
+        //Os dois sao usados no Migration
         public IConfiguration _configuration { get; }
         public IHostingEnvironment _environment { get; }
 
@@ -38,6 +39,7 @@ namespace RestWithAspNetCore
         {
             _configuration = configuration;
             _environment = environment;
+            //logger
             _logger = logger;
         }
 
@@ -50,9 +52,6 @@ namespace RestWithAspNetCore
 
             //Executando o Migrations
             ExecuteMigrations(connectionString);
-
-            // ***Início do código de autenticação - Start authentication Code ***
-            AutenticacaoDeUsuario(services);
 
             services.AddMvc(options =>
             {
@@ -89,6 +88,9 @@ namespace RestWithAspNetCore
             services.AddScoped<IUserRepository, UserRepositoryImp>();
             //Injeção de dependencia do nosso generics
             services.AddScoped(typeof(IRepository<>), typeof(GenericRepository<>));
+
+            // Método responsável por controlar a autenticação de usuários - TOKEN
+            AutenticacaoDeUsuario(services);            
         }
 
         private void AutenticacaoDeUsuario(IServiceCollection services)

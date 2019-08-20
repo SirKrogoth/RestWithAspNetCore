@@ -6,7 +6,7 @@ using RestWithAspNetCore.Data.VO;
 using RestWithAspNetCore.Model;
 using RestWithAspNetCore.Model.Context;
 using RestWithAspNetCoreCorrect.Data.Converters;
-using RestWithAspNetCoreCorrect.Repository.Generic;
+using RestWithAspNetCoreCorrect.Repository;
 
 namespace RestWithAspNetCore.Business.Implementations
 {

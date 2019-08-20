@@ -8,7 +8,7 @@ using RestWithAspNetCoreCorrect.Data.Converter;
 
 namespace RestWithAspNetCoreCorrect.Data.Converters
 {
-    public class PersonConverter : IParcer<PersonVO, Person>, IParcer<Person, PersonVO>
+    public class PersonConverter : IParce<PersonVO, Person>, IParce<Person, PersonVO>
     {
         public PersonVO Parce(Person origin)
         {
